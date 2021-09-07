@@ -1,0 +1,4 @@
+"Tem que ser feito de maneira única, de forma a não parecer com a de outro aluno e usar fórmulas
+ ensinadas na matéria até agora, por exemplo não pode usar a função map(provavelmente tudo mais
+ complexo que essa função não pode ser usado).A leitura será feita em pyhton 3, logo o exercício 
+tem que dar certo para tal leitura."
