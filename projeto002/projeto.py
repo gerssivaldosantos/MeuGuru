@@ -1,39 +1,161 @@
 
 class SistemaLivros:
+
     def __init__(self, dados):
         print("""        
- __  __ _       _           ____  _ _     _ _       _                 
-|  \/  (_)     | |         |  _ \(_) |   | (_)     | |                
-| \  / |_ _ __ | |__   __ _| |_) |_| |__ | |_  ___ | |_ ___  ___ __ _ 
-| |\/| | | '_ \| '_ \ / _` |  _ <| | '_ \| | |/ _ \| __/ _ \/ __/ _` |
-| |  | | | | | | | | | (_| | |_) | | |_) | | | (_) | ||  __/ (_| (_| |
-|_|  |_|_|_| |_|_| |_|\__,_|____/|_|_.__/|_|_|\___/ \__\___|\___\__,_|
-                                                                      
-                                                                      
- """)
+        __  __ _       _           ____  _ _     _ _       _                 
+        |  \/  (_)     | |         |  _ \(_) |   | (_)     | |                
+        | \  / |_ _ __ | |__   __ _| |_) |_| |__ | |_  ___ | |_ ___  ___ __ _ 
+        | |\/| | | '_ \| '_ \ / _` |  _ <| | '_ \| | |/ _ \| __/ _ \/ __/ _` |
+        | |  | | | | | | | | | (_| | |_) | | |_) | | | (_) | ||  __/ (_| (_| |
+        |_|  |_|_|_| |_|_| |_|\__,_|____/|_|_.__/|_|_|\___/ \__\___|\___\__,_|                                                                                                                                        
+        """)
         self.dados = dados
         self.handler()
 
     def handler(self):
-
-        self.listar_livros()
+        while True:
+            opcao = int(input("""
+        [ 0 ] Listar titulo e autor de livros disponiveis
+        [ 1 ] Buscar livros pela primeira letra do titulo
+        [ 2 ] Fazer adição de um novo livro à biblioteca
+        [ 3 ] Editar um livro já existente na biblioteca
+        [ 4 ] Remover um dos livros existente no sistema
+        [ 5 ] Apagar todos os livros existentes no sistema
+        [ 6 ] Sair
+        Selecione uma opção: """))
+            print("")
+            if opcao == 0:
+                self.listar_livros()
+            elif opcao == 1:
+                letra = input("Digite a letra :")
+                print("")
+                self.listar_livros_letra(letra)
+            elif opcao == 2:
+                self.adicionar_livro()
+            elif opcao == 3:
+                self.editar_livro()
+            elif opcao == 4:
+                self.excluir_livro()
+            elif opcao == 5:
+                self.excluir_todos()
+            else:
+                print("      OBRIGADO POR NOS VISITAR, VOLTE SEMPRE")
+                break
 
     def listar_livros(self):
+        """ Lista todos os livros existentes no sistema, exibindo
+        somente seu titulo e autor, idependente de conter outros
+        dados """
         for dado in self.dados:
             titulo = dado["titulo"]
             autor = dado["autor"]
-            print(f"Título: {titulo}\nAutor: {autor}\n\n")
+            print(f"Título: {titulo}\nAutor: {autor}\n")
     
+    def listar_livros_letra(self,letra):
+        """ Recebe como parametro uma letra em forma de string
+        depois faz uma varredura na lista de livros e depois exibe
+        somente os livros que possuem titulos com sua primeira letra
+        igual à entrada """
+        print(f"""Livros cujo titulo começam com a letra "{letra}" : 
+        """)
+        print('='*55)
+        for registro in self.dados:
+            if registro["titulo"][0].lower() == letra.lower():
+                for item in registro.items():
+                    print(f"{item[0]} : {item[1]}")
+                print('='*55)
 
+    def adicionar_livro(self):
+        """ Adiciona um novo livro à lista de livros,
+        é possivel adicionar um dicionario com a estrutura
+        padrão ou até criar chaves e valores extras """
+        print(""" Adicionando um novo livro ao sistema...
+         """)
+        titulos_existentes = []
+        for livro in self.dados:
+            titulos_existentes.append(livro["titulo"])
+        titulo = str(input("Digite o titulo do livro :"))
+        while titulo in titulos_existentes:
+            titulo = str(input("Este titulo já existe, tente outro :"))
+        autor = str(input("Digite o autor do livro :"))
+        editora = str(input("Digite a editora do livro :"))
+        livro = {
+            "titulo":titulo,
+            "autor":autor,
+            "editora":editora}
+        while True:
+            opcao = input("Quer adicionar mais alguma informação do livro ?[s/n]")
+            if opcao.lower() == "s":
+                print("Okay ! então vamos adicionar mais informações !")
+                chave = input("Qual a informação extra deseja adicionar(Ex: Ano de lançamento) :")
+                valor = input("Digite agora a informação em sí :")
+                livro.update({chave.replace(" ","_").lower():valor})
+            else:
+                break
+        self.dados.append(livro)
 
+        print(""" 
+        Livro Adicionado !! """)
+
+    def editar_livro(self):
+        """ Pede ao usuario uma referencia para selecionar 
+        um livro, após isso, é possivel alterar parametros
+        existentes ou adicionar novos dentro do dicionario
+        que armazena informações sobre o livro """
+        cont = 0
+        print("Todos os livros registrados no sistema : \n")
+        for registro in self.dados:
+            
+            print(f"Número de identificação [{cont}]")
+            for item in registro.items():
+                print(f"{item[0]} : {item[1]}")
+            cont += 1
+            print('='*55)
+        numero_id = int(input("""Digite o número de identificação
+        do livro que deseja alterar : """))
+        chave = input("""Digite qual informação deseja alterar ou adicionar
+        (Caso essa informação ainda não esteja cadastrada, o sistema irá adicionar,
+        caso esteja, irá alterar : """)
+        valor = input("Digite agora a informação em sí :")
+        self.dados[numero_id].update({chave.lower().replace(" ","_"):valor})
+      
+    def excluir_livro(self):
+        """ Pede ao usuario uma referencia para
+        selecionar um livro, após isso, o exclui """
+        cont = 0
+        print("Todos os livros registrados no sistema : \n")
+        for registro in self.dados:
+            
+            print(f"Número de identificação [{cont}]")
+            for item in registro.items():
+                print(f"{item[0]} : {item[1]}")
+            cont += 1
+            print('='*55)
+        numero_id = int(input("""Digite o número de identificação
+        do livro que deseja excluir : """))
+        self.dados.remove(self.dados[numero_id])
+
+    def excluir_todos(self):
+        """ Exclui todos os livros cadastrados """
+        self.dados = []
+
+#São alguns livros de exemplo, caso não queira é só iniciar com uma lista vazia
 SistemaLivros([
     {
     "titulo":"Ansiedade, O mal do século",
-    "autor":"Augusto Cury"
+    "autor":"Augusto Cury",
+    "editora":"NovoTempo"
     },
     {
     "titulo":"As seis lições",
-    "autor":"Ludwig Von Mises"
+    "autor":"Ludwig Von Mises",
+    "editora":"Novos Sertões"
+    },
+    {
+    "titulo":"Barão da casa nova",
+    "autor":"Leonardo",
+    "editora":"Novos Sertões"
     }
     
     ])
