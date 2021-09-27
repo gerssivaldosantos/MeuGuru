@@ -11,8 +11,11 @@ def somar_adjacentes(numeros):
         numero_proximo = numeros[i + 1]
         index_atual = i 
         index_proximo = i + 1
+
         if index_atual not in index_excluidos:
+
             if numero_atual == numero_proximo:
+
                 soma = numero_atual + numero_proximo
                 index_excluidos.append(index_proximo)
                 somados.append(0)
@@ -22,10 +25,14 @@ def somar_adjacentes(numeros):
                 
     if numeros[tamanho - 1] != numeros[tamanho - 2]:
         somados.append(numeros[tamanho -1])
+
     if numeros != somados:
         numeros = somados
-        return True
+        return True,numeros
     else:
-        return False
+        return False,numeros
+
+print(somar_adjacentes([1,2,2,2,4,4]))
+
 
         

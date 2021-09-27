@@ -29,3 +29,4 @@ def criar_tabuleiro(n = 4):
         matriz.append(linha)
     return matriz
 
+print(criar_tabuleiro())

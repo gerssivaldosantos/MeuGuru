@@ -6,11 +6,19 @@ Dica: olhe a função random.choices """
 
 from random import choice
 
+""" [ [0,1,2,3],
+      [0,1,2,3],
+      [0,1,2,3],
+      [0,1,2,3] ] """
+
 def substituir_matriz(matriz):
     #extraindo o tamanho da matriz para percorre-la
+
     len_lin = len(matriz)
     len_col = len(matriz[0])
+
     #extraindo as posicoes dos numeros zeros
+
     zeros_posi = []
     for linha in range(len_lin):
         for coluna in range(len_col):
@@ -19,7 +27,7 @@ def substituir_matriz(matriz):
 
     #Escolhendo qual dos zeros substituir 
     zero_sorteado = choice(zeros_posi)
-    
+   
     #Fazendo com que o 2 seja mais provavel de ser 
     #escolhido como substituto
     substitutos = (2,2,4)

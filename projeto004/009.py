@@ -7,8 +7,7 @@ mostrar para o jogador """
 
 def montar_tabuleiro(matriz):
     """ Monta um tabuleiro de 2048 a partir de 
-    uma matriz.
-    list -> NoneType """
+    uma matriz."""
     #dimensões da matriz
     len_linha = len(matriz)
     len_coluna = len(matriz[0])
@@ -23,6 +22,3 @@ def montar_tabuleiro(matriz):
         print("|")
         print("-"*49)
 
-montar_tabuleiro(
-    [[0,0,0],[0,0,0],[1,999999999999999,0]]
-)

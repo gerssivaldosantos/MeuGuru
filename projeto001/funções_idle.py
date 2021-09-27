@@ -48,9 +48,33 @@ def contar_elem(valores,elem,ini,fim):
     
  return cont
         
-valores = [4,9,1,5,8,5,10,11]
-ini = 1
-fim = 10
-elem = 5
+"""
+Em programanção, usamos o conceito máscara para indicar informações que po-
+dem ser mostradas ao usuário e informações que devem ser ”mascaradas”, isto e,
+escondidas. Numa implementação de um jogo da forca, usamos uma máscara para
+indicar que posições da palavra secreta o jogador já acertou, e cujo conteúdo por-
+tanto deve ser mostrado ao jogador, e que posições devem continuar escondidas.
+    Cada vez que o jogador acerta uma letra da palavra oculta, a máscara e atualizada
+de forma a ficar com tracinhos nos lugares de letras que o jogador ainda não acertou
+e mostrar, no seu devido lugar, as letras que ele já acertou.
+Por exemplo, se a palavra for ”carta”, a máscara atual for: [’-’, ’a’, ’-’, ’-’, ’a’] e o
+jogador adivinhar a letra ”t”,a máscara deveria ser atualizada para: [’-’, ’a’, ’-’, ’t’,
+’a’].
+    Escreva uma função chamada atualiza mascara que recebe como entrada uma
+string contendo a palavra secreta (no exemplo acima, essa palavra seria “carta”),
+uma lista cujos elementos são os caracteres da máscara atual (no exemplo acima [‘-
+’,‘a’,‘-’,‘-’,‘a’ ], e uma string com a letra que ele acabou de escolher. Sua função deve
+atualizar a máscara, colocando a letra escolhida no seu devido lugar (caso esteja
+na palavra). Se a letra não estiver na palavra, a máscara não deve ser modificada.
+A função não terá valor de retorno.
+"""
 
-print(contar_elem(valores,elem,ini,fim))
+def atualiza_mascara(palavra_secreta, letra):
+    palavra_mascarada = []
+    for posicao in palavra_secreta:
+        if posicao == letra:
+            palavra_mascarada.append(letra)
+        else:
+            palavra_mascarada.append("-")
+    return palavra_mascarada
+
